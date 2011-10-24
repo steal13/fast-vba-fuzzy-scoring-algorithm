@@ -1,0 +1,112 @@
+Option Explicit
+Public Declare Function GetTickCount Lib "kernel32.dll" () As Long
+'To be placed in the Declarations area
+'_____________________________________
+Sub TestFuzzy()
+Dim t As Long, a As Long, i As Long
+  t = GetTickCount
+  For i = 1 To 100000
+    a = Fuzzy("Sorin Sion", "Open Source")
+  Next
+  Debug.Print "Similarity score: " & a & "; " & i - 1 & " iterations took " & _
+  GetTickCount - t & " milliseconds"
+End Sub
+'TestFuzzy's result should look like:
+'Similarity score: 0.3; 100000 iterations took 2094 milliseconds
+'The test was done on an Intel processor at 3.2GHz
+'_____________________________________
+Public Function Fuzzy(ByVal s1 As String, ByVal s2 As String) As Single
+Dim i As Integer, j As Integer, k As Integer, d1 As Integer, d2 As Integer, p As Integer
+Dim c As String, a1 As String, a2 As String, f As Single, o As Single, w As Single 
+'
+'                ******* INPUT STRINGS CLEANSING *******
+'
+s1 = UCase(s1) 'input strings are converted to uppercase
+d1 = Len(s1)
+j = 1
+For i = 1 To d1
+  c = Mid(s1, i, 1)
+  Select Case c
+  Case "0" To "9", "A" To "Z" 'filter the allowable characters
+    a1 = a1 & c 'a1 is what remains from s1 after filtering
+    j = j + 1
+  End Select
+Next
+If j = 1 Then Exit Function 'if s1 is empty after filtering
+d1 = j - 1
+s2 = UCase(s2)
+d2 = Len(s2)
+j = 1
+For i = 1 To d2
+  c = Mid(s2, i, 1)
+  Select Case c
+  Case "0" To "9", "A" To "Z"
+    a2 = a2 & c
+    j = j + 1
+  End Select
+Next
+If j = 1 Then Exit Function
+d2 = j - 1
+k = d1
+If d2 < d1 Then 'to prevent doubling the code below s1 must be made the shortest string,
+                'so we swap the variables
+  k = d2
+  d2 = d1
+  d1 = k
+  s1 = a2
+  s2 = a1
+  a1 = s1
+  a2 = s2
+Else
+  s1 = a1
+  s2 = a2
+End If
+If k = 1 Then 'degenerate case, where the shortest string is just one character
+  If InStr(1, s2, s1, vbBinaryCompare) > 0 Then
+    Fuzzy = 1 / d2
+  Else
+    Fuzzy = 0
+  End If
+Else                '******* MAIN LOGIC HERE *******
+  i = 1
+  f = 0
+  o = 0
+  Do 'count the identical characters in s1 and s2 ("frequency analysis")
+    p = InStr(1, s2, Mid(s1, i, 1), vbBinaryCompare)
+                    'search the character at position i from s1 in s2
+    If p > 0 Then   'found a matching character, at position p in s2
+      f = f + 1     'increment the frequency counter
+      s2 = Left(s2, p - 1) & "~" & Mid(s2, p + 1)
+                    'replace the found character with one outside the allowable list
+                    '(I used tilde here), to prevent re-finding
+      Do            'check the order of characters
+        If i >= k Then Exit Do 'no more characters to search
+        If Mid(s2, p + 1, 1) = Mid(s1, i + 1, 1) Then
+                    'test if the next character is the same in the two strings
+          f = f + 1 'increment the frequency counter
+          o = o + 1 'increment the order counter
+          i = i + 1
+          p = p + 1
+        Else
+          Exit Do
+        End If
+      Loop
+    End If
+    If i >= k Then Exit Do
+    i = i + 1
+  Loop
+  If o > 0 Then o = o + 1 'if we got at least one match, adjust the order counter
+                          'because two characters are required to define "order"
+finish:
+  w = 2 'Weight of characters order match against characters frequency match;
+        'feel free to experiment, to get best matching results with your data.
+        'If only frequency is important, you can get rid of the second Do...Loop
+        'to significantly accelerate the code.
+        'By altering a bit the code above and the equation below you may get rid
+        'of the frequency parameter, since the order counter increments only for
+        'identical characters which are in the same order.
+        'However, I usually keep both parameters, since they offer maximum flexibility
+        'with a variety of data, and both should be maintained for this project
+  Fuzzy = (w * o + f) / (w + 1) / d2
+End If
+End Function
