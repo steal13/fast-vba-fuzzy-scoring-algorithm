@@ -1,0 +1,156 @@
+### Sorin Sion's results (3.2GHz Intel, XP SP3)
+
+*******************
+Excel 2010 VBA
+*******************
+
+Test the amount of time spent in the character cleansing part vs. the whole function, in it's original form
+Whole Fuzzy0. 200000 iterations took 3969 milliseconds. [Original code]
+Only characters filtering. 200000 iterations took 2438 milliseconds. (61% of total time). [Original character filter]
+
+Test the effect of searching A and 9 in ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 with InStr
+Finding 9 is 2.0 times slower than finding A
+
+Test using the Like operator instead of InStr for filtering characters
+Like is 23% faster than InStr on letters and numbers
+
+Test various filter forms
+200000 iterations took 2407 milliseconds. [Original filter, with Select Case]
+200000 iterations took 1343 milliseconds. (55% of total time). [InStr]
+200000 iterations took 1188 milliseconds. (49% of total time). [Like]
+200000 iterations took 1469 milliseconds. (61% of total time). [Parametrized InStr]
+200000 iterations took 1375 milliseconds. (57% of total time). [Parametrized Like]
+
+Test various improvements in the Fuzzy routines
+Fuzzy0. Similarity score: 0.3; 200000 iterations took 3968 milliseconds. [Original code]
+Fuzzy1. Similarity score: 0.3; 200000 iterations took 3641 milliseconds. (8% faster). [Mid, Ucase, Left replaced with Mid$, Ucase$, Left$]
+Fuzzy2. Similarity score: 0.3; 200000 iterations took 2703 milliseconds. (31% faster). [Filtering characters with InStr]
+Fuzzy3. Similarity score: 0.3; 200000 iterations took 2969 milliseconds. (25% faster). [Filtering with conversion to integers]
+Fuzzy4. Similarity score: 0.3; 200000 iterations took 3421 milliseconds. (13% faster). [Mid$(s2, p, 1) = '~' instead of s2 = Left(s2, p - 1) & '~' & Mid(s2, p + 1)]
+Fuzzy5. Similarity score: 0.3; 200000 iterations took 2219 milliseconds. (44% faster). [Optimized, using 'InStr' in filtering]
+Fuzzy6. Similarity score: 0.3; 200000 iterations took 2235 milliseconds. (43% faster). [Optimized, using 'Like' operator in filtering]
+HotFuzz. Similarity score: 0.3; 200000 iterations took 2265 milliseconds. (42% faster). [Optimized, parametrized, using 'Like' operator in filtering]
+
+*******************
+Excel 2003 VBA
+*******************
+
+Test the amount of time spent in the character cleansing part vs. the whole function, in it's original form
+Whole Fuzzy0. 200000 iterations took 4094 milliseconds. [Original code]
+Only characters filtering. 200000 iterations took 2453 milliseconds. (59% of total time). [Original character filter]
+
+Test the effect of searching A and 9 in ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 with InStr
+Finding 9 is 2.0 times slower than finding A
+
+Test using the Like operator instead of InStr for filtering characters
+Like is 16% faster than InStr on letters and numbers
+
+Test various filter forms
+200000 iterations took 2468 milliseconds. [Original filter, with Select Case]
+200000 iterations took 1313 milliseconds. (53% of total time). [InStr]
+200000 iterations took 1328 milliseconds. (53% of total time). [Like]
+200000 iterations took 1438 milliseconds. (58% of total time). [Parametrized InStr]
+200000 iterations took 1359 milliseconds. (55% of total time). [Parametrized Like]
+
+Test various improvements in the Fuzzy routines
+Fuzzy0. Similarity score: 0.3; 200000 iterations took 4078 milliseconds. [Original code]
+Fuzzy1. Similarity score: 0.3; 200000 iterations took 3688 milliseconds. (9% faster). [Mid, Ucase, Left replaced with Mid$, Ucase$, Left$]
+Fuzzy2. Similarity score: 0.3; 200000 iterations took 2671 milliseconds. (34% faster). [Filtering characters with InStr]
+Fuzzy3. Similarity score: 0.3; 200000 iterations took 2954 milliseconds. (27% faster). [Filtering with conversion to integers]
+Fuzzy4. Similarity score: 0.3; 200000 iterations took 3515 milliseconds. (13% faster). [Mid$(s2, p, 1) = '~' instead of s2 = Left(s2, p - 1) & '~' & Mid(s2, p + 1)]
+Fuzzy5. Similarity score: 0.3; 200000 iterations took 2141 milliseconds. (47% faster). [Optimized, using 'InStr' in filtering]
+Fuzzy6. Similarity score: 0.3; 200000 iterations took 2140 milliseconds. (47% faster). [Optimized, using 'Like' operator in filtering]
+HotFuzz. Similarity score: 0.3; 200000 iterations took 2172 milliseconds. (46% faster). [Optimized, parametrized, using 'Like' operator in filtering]
+
+*******************
+Access 2003 VBA
+*******************
+
+Test the amount of time spent in the character cleansing part vs. the whole function, in it's original form
+Whole Fuzzy0. 200000 iterations took 4094 milliseconds. [Original code]
+Only characters filtering. 200000 iterations took 2437 milliseconds. (59% of total time). [Original character filter]
+
+Test the effect of searching A and 9 in ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 with InStr
+Finding 9 is 1.9 times slower than finding A
+
+Test using the Like operator instead of InStr for filtering characters
+Like is 13% faster than InStr on letters and numbers
+
+Test various filter forms
+200000 iterations took 2469 milliseconds. [Original filter, with Select Case]
+200000 iterations took 1281 milliseconds. (51% of total time). [InStr]
+200000 iterations took 1157 milliseconds. (46% of total time). [Like]
+200000 iterations took 1453 milliseconds. (58% of total time). [Parametrized InStr]
+200000 iterations took 1390 milliseconds. (56% of total time). [Parametrized Like]
+
+Test various improvements in the Fuzzy routines
+Fuzzy0. Similarity score: 0.3; 200000 iterations took 4094 milliseconds. [Original code]
+Fuzzy1. Similarity score: 0.3; 200000 iterations took 3703 milliseconds. (9% faster). [Mid, Ucase, Left replaced with Mid$, Ucase$, Left$]
+Fuzzy2. Similarity score: 0.3; 200000 iterations took 2688 milliseconds. (34% faster). [Filtering characters with InStr]
+Fuzzy3. Similarity score: 0.3; 200000 iterations took 3047 milliseconds. (25% faster). [Filtering with conversion to integers]
+Fuzzy4. Similarity score: 0.3; 200000 iterations took 3547 milliseconds. (13% faster). [Mid$(s2, p, 1) = '~' instead of s2 = Left(s2, p - 1) & '~' & Mid(s2, p + 1)]
+Fuzzy5. Similarity score: 0.3; 200000 iterations took 2187 milliseconds. (46% faster). [Optimized, using 'InStr' in filtering]
+Fuzzy6. Similarity score: 0.3; 200000 iterations took 2172 milliseconds. (46% faster). [Optimized, using 'Like' operator in filtering]
+HotFuzz. Similarity score: 0.3; 200000 iterations took 2234 milliseconds. (45% faster). [Optimized, parametrized, using 'Like' operator in filtering]
+
+*******************
+Excel 97 VBA
+*******************
+
+Test the amount of time spent in the character cleansing part vs. the whole function, in it's original form
+Whole Fuzzy0. 200000 iterations took 3375 milliseconds. [Original code]
+Only characters filtering. 200000 iterations took 2125 milliseconds. (62% of total time). [Original character filter]
+
+Test the effect of searching A and 9 in ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 with InStr
+Finding 9 is 1.9 times slower than finding A
+
+Test using the Like operator instead of InStr for filtering characters
+Like is 19% faster than InStr on letters and numbers
+
+Test various filter forms
+200000 iterations took 2109 milliseconds. [Original filter, with Select Case]
+200000 iterations took 1156 milliseconds. (54% of total time). [InStr]
+200000 iterations took 1032 milliseconds. (48% of total time). [Like]
+200000 iterations took 1265 milliseconds. (59% of total time). [Parametrized InStr]
+* [Parametrized Like] invalid because of Replace function, not implemented in VBA 97
+
+Test various improvements in the Fuzzy routines
+Fuzzy0. Similarity score: 0.3; 200000 iterations took 3375 milliseconds. [Original code]
+Fuzzy1. Similarity score: 0.3; 200000 iterations took 2984 milliseconds. (11% faster). [Mid, Ucase, Left replaced with Mid$, Ucase$, Left$]
+Fuzzy2. Similarity score: 0.3; 200000 iterations took 2266 milliseconds. (32% faster). [Filtering characters with InStr]
+Fuzzy3. Similarity score: 0.3; 200000 iterations took 2625 milliseconds. (22% faster). [Filtering with conversion to integers]
+Fuzzy4. Similarity score: 0.3; 200000 iterations took 2906 milliseconds. (13% faster). [Mid$(s2, p, 1) = '~' instead of s2 = Left(s2, p - 1) & '~' & Mid(s2, p + 1)]
+Fuzzy5. Similarity score: 0.3; 200000 iterations took 1938 milliseconds. (42% faster). [Optimized, using 'InStr' in filtering]
+Fuzzy6. Similarity score: 0.3; 200000 iterations took 1906 milliseconds. (43% faster). [Optimized, using 'Like' operator in filtering]
+* [Optimized, parametrized, using 'Like' operator in filtering] invalid because of Replace function, not implemented in VBA 97
+
+*******************
+Access 97 VBA
+*******************
+
+Test the amount of time spent in the character cleansing part vs. the whole function, in it's original form
+Whole Fuzzy0. 200000 iterations took 3406 milliseconds. [Original code]
+Only characters filtering. 200000 iterations took 2094 milliseconds. (61% of total time). [Original character filter]
+
+Test the effect of searching A and 9 in ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 with InStr
+Finding 9 is 1.8 times slower than finding A
+
+Test using the Like operator instead of InStr for filtering characters
+Like is 22% faster than InStr on letters and numbers
+
+Test various filter forms
+200000 iterations took 2156 milliseconds. [Original filter, with Select Case]
+200000 iterations took 1156 milliseconds. (53% of total time). [InStr]
+200000 iterations took 1078 milliseconds. (50% of total time). [Like]
+200000 iterations took 1297 milliseconds. (60% of total time). [Parametrized InStr]
+* [Parametrized Like] invalid because of Replace function, not implemented in VBA 97
+
+Test various improvements in the Fuzzy routines
+Fuzzy0. Similarity score: 0.3; 200000 iterations took 3359 milliseconds. [Original code]
+Fuzzy1. Similarity score: 0.3; 200000 iterations took 2906 milliseconds. (13% faster). [Mid, Ucase, Left replaced with Mid$, Ucase$, Left$]
+Fuzzy2. Similarity score: 0.3; 200000 iterations took 2281 milliseconds. (32% faster). [Filtering characters with InStr]
+Fuzzy3. Similarity score: 0.3; 200000 iterations took 2704 milliseconds. (19% faster). [Filtering with conversion to integers]
+Fuzzy4. Similarity score: 0.3; 200000 iterations took 2906 milliseconds. (13% faster). [Mid$(s2, p, 1) = '~' instead of s2 = Left(s2, p - 1) & '~' & Mid(s2, p + 1)]
+Fuzzy5. Similarity score: 0.3; 200000 iterations took 1953 milliseconds. (41% faster). [Optimized, using 'InStr' in filtering]
+Fuzzy6. Similarity score: 0.3; 200000 iterations took 1953 milliseconds. (41% faster). [Optimized, using 'Like' operator in filtering]
+* [Optimized, parametrized, using 'Like' operator in filtering] invalid because of Replace function, not implemented in VBA 97
