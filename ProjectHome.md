@@ -1,0 +1,2 @@
+A common problem in geomarketing (and not only) is matching sets of addresses/names from various sources. A fuzzy matching algorithm aids in matching "dirty" data with some form of "standard" data, based on a similarity score. The length of the strings and of the compared lists greatly influences the matching speed and so you need fast algorithms to do the core job, that of scoring pairs of strings.
+The project's main objective is to build the fastest possible similarity scoring algorithm and migrate it's logic in a DLL to be used in Excel/Access VBA modules.
